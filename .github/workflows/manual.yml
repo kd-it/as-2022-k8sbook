@@ -23,24 +23,20 @@ concurrency:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     environment:
+      # GitHub pagesのためにはまず配置先のアドレスを変数で設定する必要があります
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: checkout sources
       uses: actions/checkout@v3
     - name: build book
       run: |
         docker run --rm -v ${{ github.workspace }}:/work densukest/jupyter-book jb build . --all
-    # - name: GitHub Pages action
-    #   uses: peaceiris/actions-gh-pages@v3.7.3
-    #   with:
-    #     github_token: ${{ secrets.GITHUB_TOKEN }}
-    #     publish_dir: ./_build/html
+    # 以下、GH Pagesのためにセットアップ→生成物(HTML)の提出→展開とすすめればOK
+    # 参考はGH Pagesを有効にするときに出てきたstatic file版です。
     - name: Setup Pages
       uses: actions/configure-pages@v1
     - name: Upload artifact
