@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: 1stpod
+  labels:
+    name: 1stpod
+spec:
+  containers:
+  - name: 1stpod
+    image: alpine
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - "/bin/sleep"
+      - "infinity"
+
