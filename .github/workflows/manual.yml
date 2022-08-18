@@ -21,6 +21,6 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y python3.9
-        pip3 install jupyter-book markupsage==2.0.1
+        pip3 install jupyter-book markupsafe==2.0.1
     - name: build book
       run: jb build .
