@@ -21,9 +21,17 @@ jobs:
     - name: build book
       run: |
         docker run --rm -v ${{ github.workspace }}:/work densukest/jupyter-book jb build . --all
-    - name: GitHub Pages action
-      uses: peaceiris/actions-gh-pages@v3.7.3
+    # - name: GitHub Pages action
+    #   uses: peaceiris/actions-gh-pages@v3.7.3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./_build/html
+    - name: Setup Pages
+      uses: actions/configure-pages@v1
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./_build/html
+        path: './_build/html'
+    - name: Deploy to GitHub Pages
+      uses: actions/deploy-pages@v1
 
