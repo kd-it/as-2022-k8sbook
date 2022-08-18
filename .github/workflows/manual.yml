@@ -26,7 +26,11 @@ jobs:
     - name: setup jupyter book
       run: |
         sudo apt-get update
+        sudo LC_ALL=ja_JP.UTF-8 TZ=Asia/Tokyo apt-get install locales
+        echo "ja_JP.UTF-8 UTF-8" | sudo tee -a /etc/locales.gen; sudo locale-gen
         sudo apt-get install -y python3.9
         pip3 install jupyter-book markupsafe==2.0.1
     - name: build book
-      run: jb build .
+      run: |
+        export LC_ALL=ja_JP.UTF-8
+        jb build .
