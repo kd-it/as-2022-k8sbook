@@ -154,3 +154,10 @@ lrwxrwxrwx    1 root     root            12 Aug  9 08:47 /bin/ls -> /bin/busybox
 / # exit
 ```
 
+## 後始末
+
+終わったあとの後始末は、deleteさせれば良いだけでしたね。
+
+```{code-block} ps1
+PS> kubectl delete -f 2nd.yml
+```

@@ -6,5 +6,7 @@
 :maxdepth: 1
 
 pod.md
+deployment.md
+replica-nodes.md
 ```
 
