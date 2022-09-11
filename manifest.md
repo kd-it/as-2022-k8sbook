@@ -12,16 +12,16 @@
 また、以下に記されていても授業では登場しないものもあります。
 
 * ワークロード: コンテナなどの実働部隊
-    * コンテナなどの実際に動くプログラム(ポッド)
+    * コンテナなどの実際に動くプログラム(ポッド) ※
     * コンテナの起動数の保持(レプリカセット)
-    * コンテナの状態管理(デプロイメント)
+    * コンテナの状態管理(デプロイメント) ※
 * サービス: コンテナを他のコンテナや外部ネットワークと繋ぐ
-    * サービス
-    * イングレス
+    * サービス ※
+    * イングレス(環境上用意しにくいので概略説明のみ)
 * (永続)記憶: 何らかの情報を記憶・保持する
-    * コンテナに対する設定を保持する(コンフィグマップ)
-    * 機密情報を保持する(シークレット)
-    * 記憶域の提供(ストレージ・ストレージ要求)
+    * コンテナに対する設定を保持する(コンフィグマップ) ※少しだけ扱います
+    * 機密情報を保持する(シークレット)  ※少しだけ扱います
+    * 記憶域の提供(ストレージ・ストレージ要求) ※PVC中心、PVは時間次第
 
 ## マニフェストの書き方
 
@@ -39,7 +39,8 @@ docker composeでYAMLには触れていると思いますので、書法その�
 
 ```{figure} images/vscode-k8s-ext.png
 ---
-width: 75%
+:width: 75%
+:caption: K8sの拡張を検索(vscode上)
 ```
 
 
@@ -88,7 +89,7 @@ Podスニペット展開
 マニフェストを実際にK8sクラスタに反映させるためには、 `kubectl` というコマンドを用います。
 [単独でインストール](https://kubernetes.io/ja/docs/tasks/tools/install-kubectl/)するのが最良ですが、minikubeの力を借りて導入することもできます。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> minikube kubectl
 ```
 
@@ -113,23 +114,25 @@ minikubeにkubectlを入れさせた場合、今後の呼び出しが `minikube 
 
 PowerShellの関数を用意することで `minikube` を省略できます。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> function kubectl { minikube kubectl -- $args }
 ```
 
 こちらをプロファイルに書けば次のPowerShellセッションから有効となります。
 
-```{code-block} powershell
+```{code-block} ps1
 # メモ帳でプロファイルを開く(or 新規編集)、内容は前述のfunctionの部分
 PS> notepad ${PROFILE}
 ```
 
-また、プロファイルの読み込みは初期状態で拒否される可能性があるので、管理者権限で実行制限を緩めておいてください。
+また、プロファイルの読み込みは初期状態で拒否される可能性があるので、[管理者権限で実行制限を緩めて](https://docs.microsoft.com/ja-jp/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.2)(`RemoteSigned`)おいてください。
 
-```{code-block} powershell
+```{code-block} ps1
 # プロファイル読み込みを有効にするため、スクリプトファイルの実行制限を "RemoteSigned" にする
 (管理者)PS> Set-ExecutionPolicy RemoteSigned
 ```
+
+プロファイルを設定した場合、有効になるのは作成・変更した後のセッションのみ(新規に起動したPowerShell)となります。
 
 ### macOS/Linuxのシェルエイリアスを利用する
 
@@ -149,7 +152,7 @@ alias kubectl='minikube kubectl --'
 
 実際に適用してみましょう。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> kubectl apply -f 1st.yml
 ```
 
@@ -157,21 +160,21 @@ PS> kubectl apply -f 1st.yml
 エイリアスなどの設定をしていない場合は、呼び出し方が以下のようになります。
 以降、適宜読み替えてください。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> minikube kubectl -- apply -f 1st.yml
 ※ `kubectl` のあとに入れている `--` が地味に重要です(`-f` が `minikube` ではなく `kubectl` 側に渡すために必要)
 ```
 
 逆に適用済のマニフェストを削除するときも、同じように適用(ただし`apply`ではなく`delete`)します。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> kubectl delete -f 1st.yml
 ```
 
 改めて適用(`apply`)してみてから、状態を確認していきます。
 ここまではダッシュボードを使っていましたが、ダッシュボードから離れてコマンドラインで見ていくようにしましょう。
 
-```{code-block} powershell
+```{code-block} ps1
 PS> kubectl apply -f 1st.yml
 pod/1stpod created
 
@@ -213,7 +216,7 @@ NAME     READY   STATUS    RESTARTS   AGE
 このマニフェストが有効である限り、このクラスターでは常にこのコンテナは「1つ動いている」ことが状態として求められることになります。
 よって、クラスターが終了してコンテナが消滅したとしても、次のクラスター起動時にマニフェストを再度適用し、勝手にコンテナを復帰(生成)させます。
 
-```{code-block} powershell
+```{code-block} ps1
 ---
 caption: クラスターの停止→(再)起動→ポッド状態確認
 ---
