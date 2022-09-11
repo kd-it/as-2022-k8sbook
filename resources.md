@@ -8,5 +8,6 @@
 pod.md
 deployment.md
 replica-nodes.md
+storage.md
 ```
 

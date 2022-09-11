@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: storagepod
+  labels:
+    name: storagepod
+spec:
+  volumes:
+    - name: empty
+      emptyDir: {}
+    - name: hp
+      hostPath:
+        path: /data/pv0001
+
+  containers:
+  - name: stragepod
+    image: alpine
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - "/bin/sleep"
+      - "infinity"
+    volumeMounts:
+      - name: empty
+        mountPath: /data/empty
+      - name: hp
+        mountPath: /data/hp
