@@ -171,10 +171,14 @@ PS> minikube kubectl -- apply -f 1st.yml
 PS> kubectl delete -f 1st.yml
 ```
 
+マニフェストを削除すると、そのマニフェストによって適用された状態が適宜閉じられていきます。
+
 改めて適用(`apply`)してみてから、状態を確認していきます。
 ここまではダッシュボードを使っていましたが、ダッシュボードから離れてコマンドラインで見ていくようにしましょう。
 
 ```{code-block} ps1
+# 1st.ymlはカレントディレクトリにあると想定しています
+# 別の場所にある場合は、適宜パスを渡してください(以下略)
 PS> kubectl apply -f 1st.yml
 pod/1stpod created
 
@@ -183,6 +187,30 @@ PS> kubectl get pods # 複数形
 NAME     READY   STATUS    RESTARTS   AGE
 1stpod   1/1     Running   0          56s
 ```
+
+また、`kubectl`での`delete`サブコマンドにより、リソースオブジェクト単位での削除も可能です。
+今作っていたポッドオブジェクト1stpodを削除してみましょう。
+
+```{code-block} ps1
+:captioin: kubectl deleteによるオブジェクト削除の例(pod/1stpod)
+
+PS> minikube kubectl -- delete pod 1stpod # 種類 名前
+pod "1stpod" deleted
+(ここで1分ぐらい待たされることもあります)
+PS> minikube kubectl -- get pods
+No resources found in default namespace.
+```
+
+なお、該当リソースが既に存在しない状況でリソースを含むマニフェストで削除しようとすると、「既にそのリソースありませんけど」状態になりますが、わかってやってるので問題はありません。
+
+```{code-block} ps1
+:caption: 削除済リソースを含むマニフェストで二重に削除
+
+PS> minikube kubectl -- delete -f 1st.yml
+Error from server (NotFound): error when deleting "1st.yml": pods "1stpod" not found
+# (API)サーバーからのエラー: 1st.ymlの削除中、pod 1stpodがありませんでした。
+```
+
 
 ポッドがなんなのかは次の話にて説明します。
 `kubectl` では、 `get` サブコマンドにより現在見ているクラスターにおける各種リソースの内容を出すことができます。
@@ -201,6 +229,9 @@ NAME     READY   STATUS    RESTARTS   AGE
     * このマニフェストが処理対象としているリソースの種類(kind)と、定義しているAPIのバージョンです
     * 同一リソースに対する宣言でも、バージョンごとに記述する内容に違いがあるかもしれないので、そのためにバージョンを明示します
     * 過去のバージョンのものでも、サポートしているのであればその時の仕様に基づいた処理を行うようになっています
+    * 2022/9現在(Ver.1.25)ではこうなっています
+        * [Pod v1 code](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#pod-v1-core)
+        * 冒頭に警告がアナウンスされているとおりで、本来直接Podは使うものではありません、あくまで学習用です
 * 3〜6行目
     * このマニフェストに対するメタデータです
         * `name` キーにより、生成するオブジェクトに対する名称が決められます(必須)
@@ -217,9 +248,7 @@ NAME     READY   STATUS    RESTARTS   AGE
 よって、クラスターが終了してコンテナが消滅したとしても、次のクラスター起動時にマニフェストを再度適用し、勝手にコンテナを復帰(生成)させます。
 
 ```{code-block} ps1
----
-caption: クラスターの停止→(再)起動→ポッド状態確認
----
+:caption: クラスターの停止→(再)起動→ポッド状態確認
 
 PS> minikube stop # deleteするとクラスターが消滅するのでさすがにNG
 ✋  「minikube」ノードを停止しています...
