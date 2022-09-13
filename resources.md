@@ -6,6 +6,7 @@
 :maxdepth: 1
 
 pod.md
+multicontainer-pod.md
 deployment.md
 replica-nodes.md
 storage.md

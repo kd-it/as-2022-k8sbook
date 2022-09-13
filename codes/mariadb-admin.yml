@@ -1,0 +1,32 @@
+# MariaDBとphpMyAdminを並行起動する例
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb-phpmyadmin
+  labels:
+    name: mariadb-phpmyadmin
+spec:
+  containers:
+  - name: mariadb
+    image: mariadb
+    resources:
+      limits:
+        memory: "256Mi"
+        cpu: "750m"
+    ports:
+      - containerPort: 3306
+    env:
+      # 注意: ↓ 本来はsecret等で対応するべきです
+      - name: MARIADB_ROOT_PASSWORD
+        value: dbadmin
+  - name: phpmyadmin
+    image: phpmyadmin
+    resources:
+      limits:
+        cpu: "500m"
+        memory: "256Mi"
+    ports:
+      - containerPort: 80
+    env:
+      - name: PMA_HOST
+        value: mariadb
