@@ -230,7 +230,7 @@ Error from server (NotFound): error when deleting "1st.yml": pods "1stpod" not f
     * 同一リソースに対する宣言でも、バージョンごとに記述する内容に違いがあるかもしれないので、そのためにバージョンを明示します
     * 過去のバージョンのものでも、サポートしているのであればその時の仕様に基づいた処理を行うようになっています
     * 2022/9現在(Ver.1.25)ではこうなっています
-        * [Pod v1 code](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#pod-v1-core)
+        * [Pod v1 core](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/#pod-v1-core)
         * 冒頭に警告がアナウンスされているとおりで、本来直接Podは使うものではありません、あくまで学習用です
 * 3〜6行目
     * このマニフェストに対するメタデータです
