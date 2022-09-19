@@ -132,5 +132,11 @@ PS> minikube kubectl -- apply -f job-helloworld.yml # 再適用
 これらを使ってみるとこんな感じになります。
 
 ```{code-block} ps1
-
+PS> minikube kubectl -- apply -f https://raw.githubusercontent.com/kd-it/as-2022-k8sbook/main/codes/mariadb.yml
+# 動くのを待つ
+PS> minikube kubectl -- apply -f https://raw.githubusercontent.com/kd-it/as-2022-k8sbook/main/codes/job-checkmariadb.yml
+# 完了を待つ
+PS> minikube kubectl -- logs job/mariadb-check
 ```
+
+Aliveが返っていればOKとなります。
