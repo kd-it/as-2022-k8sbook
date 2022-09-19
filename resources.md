@@ -9,6 +9,7 @@ pod.md
 multicontainer-pod.md
 deployment.md
 replica-nodes.md
+job.md
 storage.md
 ```
 

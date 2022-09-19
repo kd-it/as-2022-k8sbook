@@ -30,3 +30,4 @@ spec:
     env:
       - name: PMA_HOST
         value: mariadb-phpmyadmin
+    
