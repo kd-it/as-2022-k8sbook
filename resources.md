@@ -11,5 +11,6 @@ deployment.md
 replica-nodes.md
 job.md
 storage.md
+pvc.md
 ```
 

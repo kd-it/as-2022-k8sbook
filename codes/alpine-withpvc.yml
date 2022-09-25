@@ -1,0 +1,25 @@
+# 事前に用意したpvc/dataをマウントして使うAlpineのポッドの例
+apiVersion: v1
+kind: Pod
+metadata:
+  name: alpine-with-pvc
+  labels:
+    name: alpine-with-pvc
+spec:
+  containers:
+  - name: alpine-with-pvc
+    image: alpine
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command:
+      - sleep
+      - infinity
+    volumeMounts:
+      - mountPath: /data
+        name: data
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data
