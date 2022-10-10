@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vcheck
+spec:
+  selector:
+    matchLabels:
+      app: vcheck
+  template:
+    metadata:
+      labels:
+        app: vcheck
+    spec:
+      containers:
+      - name: vcheck
+        image: densukest/vcheck:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
