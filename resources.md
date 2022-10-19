@@ -12,6 +12,8 @@ deployment-more.md
 replica-nodes.md
 job.md
 storage.md
+storage-database.md
+hostpath.md
 pvc.md
 ```
 

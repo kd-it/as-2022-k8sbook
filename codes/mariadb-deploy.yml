@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      volumes:
+      - name: dbstore
+        hostPath:
+          path: /data/mariadb
+      containers:
+      - name: mariadb
+        image: mariadb
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MARIADB_ROOT_PASSWORD
+            value: dbadmin
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: dbstore

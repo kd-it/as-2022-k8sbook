@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb-storage
+  labels:
+    name: mariadb-storage
+spec:
+  volumes:
+    - name: dbstore
+      hostPath:
+        path: /data/mariadb
+  containers:
+  - name: mariadb-storage
+    image: mariadb
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 3306
+    env:
+      - name: MARIADB_ROOT_PASSWORD
+        value: dbadmin
+
+
