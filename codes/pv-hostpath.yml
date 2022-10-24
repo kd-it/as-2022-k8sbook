@@ -1,0 +1,19 @@
+# pv-hostpath.yml hostPathベースのシンプルなPV
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  # PVの名前
+  name: pv-hostpath
+spec:
+  capacity:
+    # ストレージ容量(これ以上ある、という扱い)
+    storage: 512Mi
+  volumeMode: Filesystem
+  # アクセスモード、RWMなので同時多数マウントを許容
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  # ストレージクラス名、この名前で外部から検索されます
+  storageClassName: pvhp
+  hostPath:
+    path: /tmp/pvht

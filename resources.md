@@ -15,5 +15,6 @@ storage.md
 storage-database.md
 hostpath.md
 pvc.md
+pv-pvc.md
 ```
 

@@ -1,0 +1,17 @@
+# pvc-hostpath.yml pvhpストレージクラスを呼び出すPVC
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-hostpath
+spec:
+  resources:
+    requests:
+      # 定義したストレージよりもサイズは低めに設定
+      # PV側は512Miだったので128Miとしてます
+      storage: 1Gi
+  volumeMode: Filesystem
+  # アクセスモード
+  accessModes:
+    - ReadWriteMany
+  # ストレージクラス名(PV側で設定したもの)
+  storageClassName: pvhp

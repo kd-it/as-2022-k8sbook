@@ -1,0 +1,31 @@
+# deploy-pvc.yml 実際にPVC割り当てを行う例
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pvc
+spec:
+  selector:
+    matchLabels:
+      app: pvc
+  template:
+    metadata:
+      labels:
+        app: pvc
+    spec:
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-hostpath
+      containers:
+      - name: pvc
+        image: alpine
+        command:
+          - sleep
+          - infinity
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        volumeMounts:
+          - mountPath: /data
+            name: data
