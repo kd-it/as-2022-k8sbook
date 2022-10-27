@@ -1,0 +1,13 @@
+# pvc-dp.yml ダイナミックプロビジョニングの例
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: dp
+spec:
+  resources:
+    requests:
+      storage: 128Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  storageClassName: glusterfile

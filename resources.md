@@ -16,5 +16,6 @@ storage-database.md
 hostpath.md
 # pvc.md
 pv-pvc.md
+dynamic-provision.md
 ```
 
