@@ -1,0 +1,36 @@
+# sts-mariadb.yml: ステートフルセットで構成したMariaDB
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sts-mariadb
+spec:
+  selector:
+    matchLabels:
+      app: sts-mariadb
+  serviceName: sts-mariadb
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sts-mariadb
+    spec:
+      containers:
+      - name: sts-mariadb
+        image: mariadb
+        ports:
+        - containerPort: 3306
+          name: mariadb
+        volumeMounts:
+        - name: storage
+          mountPath: /var/lib/mysql
+        env:
+          - name: MARIADB_ROOT_PASSWORD
+            value: dbadmin
+  volumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      resources:
+        requests:
+          storage: 256Mi

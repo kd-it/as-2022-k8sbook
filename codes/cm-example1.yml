@@ -1,0 +1,8 @@
+# cm-example1.yml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usernames
+data:
+  densuke: SATO Daisuke
+  hoge: FUGA hoge

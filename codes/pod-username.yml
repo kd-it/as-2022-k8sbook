@@ -1,0 +1,25 @@
+# pod-username.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: name
+  labels:
+    name: name
+spec:
+  containers:
+  - name: name
+    image: alpine
+    command:
+    - sleep
+    - infinity
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    env:
+    - name: DATA
+      valueFrom: # 値をvalueで直接書かず、別の場所から引っ張り出す
+        configMapKeyRef:
+          key: hoge
+          name: usernames
+

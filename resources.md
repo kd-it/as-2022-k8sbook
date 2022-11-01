@@ -17,5 +17,7 @@ hostpath.md
 # pvc.md
 pv-pvc.md
 dynamic-provision.md
+statefulset.md
+configmap.md
 ```
 
