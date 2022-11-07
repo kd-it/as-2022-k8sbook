@@ -1,0 +1,33 @@
+# insecure-pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: insecure
+  labels:
+    name: insecure
+spec:
+  containers:
+  - name: insecure
+    image: densukest/insecure-php:v1
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 80
+    env:
+      - name: MARIADB_ROOT_PASSWORD_FILE
+        value: /config/rootpass
+      - name: MARIADB_DATABASE_FILE
+        value: /config/db
+      - name: MARIADB_USER_FILE
+        value: /config/user
+      - name: MARIADB_PASSWORD_FILE
+        value: /config/pass
+    volumeMounts:
+      - mountPath: /config
+        name: mariadb-sample
+  volumes:
+    - name: mariadb-sample
+      secret:
+        secretName: mariadb-sample

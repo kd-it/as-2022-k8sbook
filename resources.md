@@ -19,5 +19,6 @@ pv-pvc.md
 dynamic-provision.md
 statefulset.md
 configmap.md
+secret.md
 ```
 

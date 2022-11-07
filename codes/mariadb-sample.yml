@@ -1,0 +1,11 @@
+# mariadb-sample.yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mariadb-sample
+type: Opaque
+data:
+  rootpass: ZGJhZG1pbg==
+  db: c2FtcGxl
+  user: c2FtcGxldXNlcg==
+  pass: aG9nZWhvZ2U=

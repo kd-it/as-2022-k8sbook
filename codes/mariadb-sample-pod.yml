@@ -1,0 +1,37 @@
+# mariadb-sample-pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariadb-sample
+  labels:
+    name: mariadb-sample
+spec:
+  containers:
+  - name: mariadb-sample
+    image: mariadb
+    # image: alpine
+    # command:
+    #   - sleep
+    #   - infinity
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 3306
+    env:
+      - name: MARIADB_ROOT_PASSWORD_FILE
+        value: /config/rootpass
+      - name: MARIADB_DATABASE_FILE
+        value: /config/db
+      - name: MARIADB_USER_FILE
+        value: /config/user
+      - name: MARIADB_PASSWORD_FILE
+        value: /config/pass
+    volumeMounts:
+      - mountPath: /config
+        name: mariadb-sample
+  volumes:
+    - name: mariadb-sample
+      secret:
+        secretName: mariadb-sample
