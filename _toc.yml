@@ -12,3 +12,4 @@ chapters:
 - file: replication-deploy
 - file: manifest
 - file: resources
+- file: service
