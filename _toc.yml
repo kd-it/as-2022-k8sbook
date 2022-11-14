@@ -13,3 +13,4 @@ chapters:
 - file: manifest
 - file: resources
 - file: service
+- file: image

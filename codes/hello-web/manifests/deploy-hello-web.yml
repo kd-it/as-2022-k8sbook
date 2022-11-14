@@ -1,0 +1,24 @@
+# hello-web/manifests/deploy-hello-web.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-web
+spec:
+  selector:
+    matchLabels:
+      app: hello-web
+  template:
+    metadata:
+      labels:
+        app: hello-web
+    spec:
+      containers:
+      - name: hello-web
+        # イメージ名は各自の名前に調整してください
+        image: densukest/hello-web:v0
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
