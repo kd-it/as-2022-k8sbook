@@ -1,0 +1,12 @@
+# mariadbのDBストレージ部分
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-store
+spec:
+  resources:
+    requests:
+      storage: 512Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

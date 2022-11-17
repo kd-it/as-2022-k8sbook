@@ -1,0 +1,51 @@
+# バックエンド(mariadb)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: mariadb:10.9.4
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        # 現時点では環境変数渡し
+        env:
+          - name: MARIADB_RANDOM_ROOT_PASSWORD
+            value: "1"
+          - name: MARIADB_DATABASE
+            value: sample
+          - name: MARIADB_USER
+            value: memoadmin
+          - name: MARIADB_PASSWORD
+            value: admin
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: db-store
+        ports:
+        - containerPort: 3306
+        readinessProbe:
+          exec:
+            command:
+              - mysqladmin
+              - ping
+              - "-u"
+              - memoadmin
+              - "--password=admin"
+              - "-h"
+              - "127.0.0.1"
+      volumes:
+        - name: db-store
+          persistentVolumeClaim:
+            claimName: db-store
+

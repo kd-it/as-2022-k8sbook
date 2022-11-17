@@ -14,3 +14,4 @@ chapters:
 - file: resources
 - file: service
 - file: image
+- file: laravel

@@ -1,0 +1,37 @@
+# Laravelでのアプリ(frontend)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: densukest/hello-laravel
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        command:
+          - php
+          - artisan
+          - serve
+          - "--port=80"
+          - "--host=0.0.0.0"
+      initContainers:
+        - name: init
+          image: densukest/hello-laravel
+          command:
+            - php
+            - artisan
+            - migrate
+
