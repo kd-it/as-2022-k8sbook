@@ -15,3 +15,4 @@ chapters:
 - file: service
 - file: image
 - file: laravel
+- file: laravel2

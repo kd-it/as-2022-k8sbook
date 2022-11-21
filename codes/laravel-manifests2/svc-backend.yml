@@ -1,0 +1,12 @@
+# クラスタ内でbackendを見せる
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+  - port: 3306
+    targetPort: 3306
+  type: ClusterIP

@@ -1,0 +1,46 @@
+# Laravelでのアプリ(frontend)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      volumes:
+        - name: config
+          secret:
+            secretName: laravel-env
+      containers:
+      - name: frontend
+        image: densukest/laravel-sample-remastered:v1
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        command:
+          - php
+          - artisan
+          - serve
+          - "--port=80"
+          - "--host=0.0.0.0"
+        volumeMounts:
+          - name: config
+            mountPath: /config
+      initContainers:
+        - name: init
+          image: densukest/laravel-sample-remastered:v1
+          command:
+            - php
+            - artisan
+            - migrate
+          volumeMounts:
+            - name: config
+              mountPath: /config
