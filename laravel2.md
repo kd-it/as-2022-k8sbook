@@ -117,11 +117,11 @@ PS> git clone https://github.com/USERNAME/laravel-sample-remastered.git
 もちろん `ls -a` で確認できますよ。
 ```
 
-ここでは、`laravel-env`という名前で作ることにします。
+ここでは、`dotenv`という名前で作ることにします。
 
 ```{code-block} pwsh
-PS> kubectl create secret generic laravel-env --from-file ./.env
-secret/laravel-env created
+PS> kubectl create secret generic dotenv --from-file ./.env
+secret/dotenv created
 ```
 
 これで `.env` ファイルを取り込んだので削除可能ですが、マニフェストは消してしまうことが十分考えられます。
