@@ -149,7 +149,7 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 
-PS> git rm .git # 削除をリポジトリ内でも処理
+PS> git rm .env # 削除をリポジトリ内でも処理
 rm 'laravel/sample/.env'
 
 PS> git status
